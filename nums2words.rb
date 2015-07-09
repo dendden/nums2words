@@ -30,7 +30,7 @@ def num2words num
 
     if write > 0
         bigName = num2words write
-        numString += bigName + ' ' + bigNames[bigNameIndex] + ' and'
+        numString += bigName + ' ' + bigNames[bigNameIndex]
 
         if left > 0
             numString += ' '
@@ -51,7 +51,7 @@ def num2words num
             numString += teens[left-1]
             left = 0
         else
-            numString += tensPlace[write-1] + ' and'
+            numString += tensPlace[write-1]
         end
     end
 
