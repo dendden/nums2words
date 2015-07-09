@@ -1,101 +1,51 @@
 def num2words num
-    if ( num < 0 || num > 100 )
-        return 'Please enter number between 0 and 100'
+    if num < 0
+        return 'Please provide a non-negative number:'
+    end
+    if num == 0
+        return 'zero'
     end
 
     numString = ''
-    if num == 100
-        numString = 'One hundred'
-    else
-        write = num / 10
-        left = num % 10
-        tensString = ''
-        onesString = ''
-        if write == 0
-            if left == 0
-                numString = 'Zero'
-            elsif left == 1
-                numString = 'One'
-            elsif left == 2 
-                numString = 'Two'
-            elsif left == 3
-                numString = 'Three'
-            elsif left == 4
-                numString = 'Four'
-            elsif left == 5
-                numString = 'Five'
-            elsif left == 6
-                numString = 'Six'
-            elsif left == 7
-                numString = 'Seven'
-            elsif left == 8
-                numString = 'Eight'
-            elsif left == 9
-                numString = 'Nine'
-            end
-        elsif write == 1
-            if left == 0
-                numString = 'Ten'
-            elsif left == 1
-                numString = 'Eleven'
-            elsif left == 2 
-                numString = 'Twelve'
-            elsif left == 3
-                numString = 'Thirteen'
-            elsif left == 4
-                numString = 'Fourteen'
-            elsif left == 5
-                numString = 'Fifteen'
-            elsif left == 6
-                numString = 'Sixteen'
-            elsif left == 7
-                numString = 'Seventeen'
-            elsif left == 8
-                numString = 'Eighteen'
-            elsif left == 9
-                numString = 'Nineteen'
-            end
-        else
-            if write == 2
-                tensString = 'Twenty'
-            elsif write == 3
-                tensString = 'Thirty'
-            elsif write == 4
-                tensString = 'Fourty'
-            elsif write == 5
-                tensString = 'Fifty'
-            elsif write == 6
-                tensString = 'Sixty'
-            elsif write == 7
-                tensString = 'Seventy'
-            elsif write == 8
-                tensString = 'Eighty'
-            elsif write == 9
-                tensString = 'Ninety'
-            end
+    onesPlace = ['one','two','three','four','five','six','seven','eight','nine']
+    tensPlace = ['ten','twenty','thirty','fourty','fifty','sixty','seventy','eighty','ninety']
+    teens = ['eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen']
 
-            if left == 1
-                onesString = 'one'
-            elsif left == 2
-                onesString = 'two'
-            elsif left == 3
-                onesString = 'three'
-            elsif left == 4
-                onesString = 'four'
-            elsif left == 5
-                onesString = 'five'
-            elsif left == 6
-                onesString = 'six'
-            elsif left == 7
-                onesString = 'seven'
-            elsif left == 8
-                onesString = 'eight'
-            elsif left == 9
-                onesString = 'nine'
-            end
+    left = num
+    write = left / 100
+    left = left % 100
 
-            numString = tensString + ' ' + onesString
+    if write > 0
+        hundreds = num2words write
+        numString += hundreds + ' hundred'
+
+        if left > 0
+            numString += ' '
         end
+    end
+
+    write = left / 10
+    left = left % 10
+
+    if write > 0
+        if ( write == 1 && left > 0 )
+            numString += teens[left-1]
+            left = 0
+        else
+            numString += tensPlace[write-1]
+        end
+    end
+
+    if left > 0
+        if numString != ''
+            numString += ' '
+        end
+    end
+
+    write = left
+    left = 0
+    if write > 0
+        numString += onesPlace[write-1]
     end
 
     numString
@@ -104,7 +54,7 @@ end
 puts 'This program convert numbers to their spoken forms. Enter "q" to quit.'
 puts '**********************************************************************'
 puts
-puts 'Enter a number between 0 and 100:'
+puts 'Enter a number:'
 request = gets.chomp
 while request != 'q'
     puts num2words request.to_i
